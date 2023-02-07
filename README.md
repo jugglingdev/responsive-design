@@ -1,6 +1,6 @@
-# Interneting Is Hard - Responsive Design
+# Interneting Is Hard - Responsive Design and Responsive Images
 
-This is a solution to the [Responsive Design tutorial No. 10 of HTML & CSS Is Hard](https://www.internetingishard.com/html-and-css/responsive-design/).
+This is a solution to the [Responsive Design tutorial No. 10 of HTML & CSS Is Hard](https://www.internetingishard.com/html-and-css/responsive-design/) and [Responsive Images tutorial No. 11 of HTML & CSS Is Hard](https://www.internetingishard.com/html-and-css/responsive-images/).
 
 ## Table of contents
 
@@ -45,9 +45,54 @@ While the mobile and tablet media queries had fluid widths, the desktop width wa
 
 One thing to remember to add to the `<head>` of the document is the code to disable viewport zooming so mobile devices can actually use the mobile layout.  The code for this is below.
 
-*RETINA SCREENS*
+On to responsive images.
 
-Code snippets from this tutorial include:
+It's first important to note that retina screens have two or even three times as many pixels as standard screens.  This makes the images smaller.  Keep this in mind moving forward with responsive images.
+
+SVGs are awesome in this scenario because they scale for retina screens.  In this tutorial, we just need to set `.illustration` to `width: 100%` (so the image is fluid across devices) and then add an inline style to the `<img>` tag so `style='max-width: 500px'` (so the desktop image doesn't get too large).
+
+What about PNG, GIF, and JPG?  If you want to be lazy, then you can just use a high-resolution image (1000x500), assuming every screen is a retina screen.  
+
+For image optimization, there are 3 options:
+
+1. Retina Optimization Using `srcset`
+
+```html
+<!-- This attribute defines which image a browser should use.  1x is for standard and 2x is for retina -->
+<img src="illustration-small.png"
+    srcset="images/illustration-small.png 1x,
+            images/illustration-big.png 2x"
+    style="max-width: 500px">
+```
+
+2. Screen Width Optimization
+
+```html
+<!-- Here, we're optimizing based on image dimension and not just device screen resolution -->
+<img src="images/photo-small.jpg"
+    srcset="images/photo-big.jpg 2000w,
+            images/photo-small.jpg 1000w"
+    sizes="(min-width: 960px) 960px, 100vw">
+```
+
+3. Art Direction with `<picture>`
+
+```html
+<!-- Use this when you're want to use a tall image for mobile and wide image for desktop -->
+<picture>
+  <source media="(min-width: 401px)"
+          srcset="images/photo-big.jpg">
+  <source media="(max-width: 400px)"
+          srcset="images/photo-tall.jpg">
+  <img src="images/photo-small.jpg">
+</picture>
+```
+
+Use option 1 for images less than 600px wide.  Use option 2 for bigger photos.  Use option 3 for when you're trying to do something fancy with your designer.
+
+That's a wrap on responsive design!
+
+Other code snippets from this tutorial include:
 
 ```css
 /* Mobile Styles */
@@ -80,7 +125,7 @@ Code snippets from this tutorial include:
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+Okay, there was a lot here.  I most would like practice with each of the 3 responsive image scenarios.
 
 ### Useful resources
 
